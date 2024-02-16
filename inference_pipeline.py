@@ -49,4 +49,9 @@ predict_task = PythonOperator(
             python_callable = predict_data,
             dag = ML_inference_dag)
 ######
+Load_task.set_downstream(encode_task)
+encode_task.set_downstream(norm_task)
+norm_task.set_downstream(predict_task)
+
+load_task >> encode_task >> norm_task >> predict_task
 
